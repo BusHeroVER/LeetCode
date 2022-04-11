@@ -12,7 +12,7 @@ public class Solution {
         // for (int i = 0; i < nums.Length; i++)
         //     if (!dic.ContainsKey(target - nums[i]))
         //         dic.Add(target - nums[i], i);
-        
+
         // for (int i = 0; i < nums.Length - 1; i++)
         //     if (dic.ContainsKey(nums[i]))
         //         return new int[2] {i, dic[nums[i]]};
@@ -22,11 +22,13 @@ public class Solution {
         Dictionary<int, int> dic = new Dictionary<int, int>();
         int key;
         for (int i = 0; i < nums.Length; i++)
-            if (dic.ContainsKey(nums[i])) return new int[] {dic[nums[i]], i};
+            if (dic.ContainsKey(nums[i]))
+                return new int[] {dic[nums[i]], i};
             else
             {
                 key = target - nums[i];
-                if (!dic.ContainsKey(key)) dic.Add(key, i);
+                if (!dic.ContainsKey(key))
+                    dic.Add(key, i);
             }
         return null;
     }
