@@ -27,10 +27,10 @@ public:
         // One-pass Hash Table
         unordered_map<int, int> map;
         for (int i = 0; i < nums.size(); i++) {
-            if (map.find(target - nums[i]) != map.end()) {
-                return {map[target - nums[i]], i};
+            if (map.find(nums[i]) != map.end()) {
+                return {map[nums[i]], i};
             }
-            map[nums[i]] = i;
+            map[target - nums[i]] = i;
         }
         return {};
     }

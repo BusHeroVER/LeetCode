@@ -20,16 +20,13 @@ public class Solution {
 
         // One-pass Hash Table
         Dictionary<int, int> dic = new Dictionary<int, int>();
-        int key;
         for (int i = 0; i < nums.Length; i++)
+        {
+            int num = nums[i];
             if (dic.ContainsKey(nums[i]))
                 return new int[] {dic[nums[i]], i};
-            else
-            {
-                key = target - nums[i];
-                if (!dic.ContainsKey(key))
-                    dic.Add(key, i);
-            }
+            dic.Add(target - nums[i], i);
+        }
         return null;
     }
 }

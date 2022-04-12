@@ -46,21 +46,18 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize){
     // One-pass Hash Table
     int* res = calloc((*returnSize = 2), sizeof(int));
 	num_t *numsHash = NULL, *num = NULL, *tmp = NULL;
-
-	for(int i = 0; i < numsSize; ++i){
-		int toFind = target - nums[i];
+	for(int i = 0; i < numsSize; i++) {
+		int toFind = nums[i];
 		HASH_FIND_INT(numsHash, &toFind, num);
-
-		if (num != NULL){
+		if (num != NULL) {
 			res[0] = num->idx;
 			res[1] = i;
 			break;
-		} else {
-			num = malloc(sizeof(num_t));
-			num->num = nums[i];
-            num->idx = i;
-			HASH_ADD_INT(numsHash, num, num);
 		}
+        num = malloc(sizeof(num_t));
+        num->num = target - nums[i];
+        num->idx = i;
+        HASH_ADD_INT(numsHash, num, num);
 	}
 	return res;
 }

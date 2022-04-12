@@ -31,9 +31,8 @@
         var num = nums[i];
         if (dic[num] != undefined) {
             return [dic[num], i];
-        } else {
-            dic[target - num] = i;
         }
+        dic[target - num] = i;
     }
     return undefined;
 };

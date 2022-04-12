@@ -3,7 +3,7 @@ func twoSum(nums []int, target int) []int {
 	// for i := 0; i < len(nums) - 1; i++ {
 	//     for j := i + 1; j < len(nums); j++ {
 	// 		if nums[i] + nums[j] == target {
-	//             return []int{i, j}
+	// 			return []int{i, j}
 	// 		}
 	// 	}
 	// }
@@ -23,10 +23,11 @@ func twoSum(nums []int, target int) []int {
 	// return nil
 
 	// One-pass Hash Table
-	m := make(map[int]int, len(nums))
+	m := map[int]int{}
 	for i, num := range nums {
-		if _, ok := m[target-num]; ok {
-			return []int{m[target-num], i}
+		key := target - num
+		if j, ok := m[key]; ok {
+			return []int{j, i}
 		}
 		m[num] = i
 	}

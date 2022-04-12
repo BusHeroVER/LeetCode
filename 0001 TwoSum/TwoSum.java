@@ -29,12 +29,11 @@ class Solution {
         // One-pass Hash Table
         Map<Integer,Integer> map = new HashMap();
         for (int i = 0; i < nums.length; i++) {
-            Integer num = target - nums[i];
-            if (map.get(nums[i]) != null) {
-                return new int[] {map.get(nums[i]), i};
-            } else {
-                map.put(num, i);
+            int num = nums[i];
+            if (map.get(num) != null) {
+                return new int[] {map.get(num), i};
             }
+            map.put(target - num, i);
         }
         return null;
     }
