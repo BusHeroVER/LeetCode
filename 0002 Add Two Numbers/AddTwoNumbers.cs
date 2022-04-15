@@ -23,8 +23,8 @@ public class Solution {
             l1 = l1.next;
             l2 = l2.next;
 
-            sum = l1.val + l2.val;
-            l1.val = sum % 10 + tens;
+            sum = l1.val + l2.val + tens;
+            l1.val = sum % 10;
             tens = sum / 10;
         }
 
