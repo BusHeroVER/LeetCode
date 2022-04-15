@@ -27,7 +27,7 @@ class Solution {
         // return null;
 
         // One-pass Hash Table
-        Map<Integer,Integer> map = new HashMap();
+        Map<int, int> map = new HashMap();
         for (int i = 0; i < nums.length; i++) {
             int num = nums[i];
             if (map.get(num) != null) {

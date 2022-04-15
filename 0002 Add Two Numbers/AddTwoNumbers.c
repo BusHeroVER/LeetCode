@@ -8,7 +8,9 @@
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
     if (!l1)
         return l2 ? NULL : l2;
-
+    else if (!l2)
+        return l1;
+    
     struct ListNode *ret = l1;
     int sum = l1->val + l2->val;
     l1->val = sum % 10;
@@ -18,8 +20,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
         l1 = l1->next;
         l2 = l2->next;
 
-        sum = l1->val + l2->val;
-        sum += tens;
+        sum = l1->val + l2->val + tens;
         l1->val = sum % 10;
         tens = sum / 10;
     }
