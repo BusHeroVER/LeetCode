@@ -13,8 +13,10 @@ public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         if (!l1)
             return l2 ? nullptr : l2;
+        else if (!l2)
+            return l1;
         
-        struct ListNode* ret = l1;
+        struct ListNode *ret = l1;
         int sum = l1->val + l2->val;
         l1->val = sum % 10;
         int tens = sum / 10;
@@ -51,7 +53,6 @@ public:
         if (tens != 0) {
             l1->next = new ListNode(tens);
         }
-
         return ret;
     }
 };
