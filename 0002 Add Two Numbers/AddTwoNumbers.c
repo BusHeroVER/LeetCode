@@ -29,8 +29,9 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
         if (!l2->next) {
             if (tens != 0) {
                 l1->next = (struct ListNode*)malloc(sizeof(struct ListNode));
-                l1->next->val = tens;
-                l1->next->next = NULL;
+                l1 = l1->next
+                l1->val = tens;
+                l1->next = NULL;
                 return ret;
             }
             return ret;
@@ -49,8 +50,9 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
     
     if (tens != 0) {
         l1->next = (struct ListNode*)malloc(sizeof(struct ListNode));
-        l1->next->val = tens;
-        l1->next->next = NULL;
+        l1 = l1->next
+        l1->val = tens;
+        l1->next = NULL;
     }
     return ret;
 }
