@@ -8,7 +8,7 @@ public class Solution {
         Dictionary<char, int> dic = new Dictionary<char, int>();
         dic[s[0]] = 1;
 
-        for (int i = 1;i < s_len; i++) {
+        for (int i = 1; i < s_len; i++) {
             char c = s[i];
             if (dic.ContainsKey(c)) {
                 ret = Math.Max(i - head, ret);
