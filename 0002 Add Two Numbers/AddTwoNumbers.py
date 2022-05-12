@@ -41,5 +41,3 @@ class Solution:
         if tens != 0:
             l1.next = ListNode(tens)
         return ret
-        
-        
