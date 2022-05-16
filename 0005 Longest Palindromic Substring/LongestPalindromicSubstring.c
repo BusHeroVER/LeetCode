@@ -8,7 +8,7 @@ char getChar(char * s, int index) {
         if (index > 2 * strlen(s)) return '$';
         if (index % 2 == 0) return '|';
         return s[index / 2];
-    }
+}
 char * longestPalindrome(char * s){
     int radii[2 * 1000 + 1] = {0};
     int maxRad = 0, maxRadC = 0, maxRadRight = 1;
