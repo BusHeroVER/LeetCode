@@ -15,7 +15,7 @@ class Solution:
         maxRadC = 0
         maxRadRight = 1
 
-        for c in range(0, 2 * len(s) + 1, 1):
+        for _, c in enumerate(s):
             if radii[c] > 0: continue
             radii[c] = maxRadRight
 
