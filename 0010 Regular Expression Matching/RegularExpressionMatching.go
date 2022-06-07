@@ -5,7 +5,6 @@ import (
 )
 
 func main() {
-	// DPtable = make(map[string]bool)
 	fmt.Println(isMatch("aa", "aa"))                                  // true
 	fmt.Println(isMatch("aa", "a*"))                                  // true
 	fmt.Println(isMatch("aa", "a*c*"))                                // true
@@ -41,121 +40,50 @@ func main() {
 	fmt.Println(isMatch("abcde", ".*e."))   // false
 }
 
-func isMatch(s string, p string) bool {
-	switch {
-	case p == "":
-		return s == ""
-	case s == "":
-		if 2 <= len(p) && p[1] == '*' {
-			return isMatch(s, p[2:])
-		} else if 2 == len(p) && p[1] == '*' {
-			return true
-		}
-		return false
-	case 2 < len(p) && p[1] == '*':
-		for i, _ := range s {
-			var temp bool
-			if p[0] == '.' {
-				temp = true
-			} else {
-				temp = isMatch(s[:i], p[:2])
-			}
-			if temp && isMatch(s[i:], p[2:]) {
-				return true
-			}
-		}
-		if isMatch(s, p[:2]) && isMatch("", p[2:]) {
-			return true
-		}
-	case 2 == len(p) && p[1] == '*':
-		if p[0] == '.' {
-			return true
-		}
-		for _, c := range s {
-			if c != rune(p[0]) {
-				return false
-			}
-		}
-		return true
-	case p[0] != '.' && s[0] != p[0]:
-		return false
-	}
-	return isMatch(s[1:], p[1:])
-}
-
-// Sluggish
-// func Hash(K0, K1 string) string {
-// 	return K0 + "|" + K1
-// }
-
-// var DPtable map[string]bool
-
 // func isMatch(s string, p string) bool {
-// 	switch {
-// 	case p == "":
-// 		return s == ""
-// 	case s == "":
-// 		if 2 <= len(p) && p[1] == '*' {
-// 			key := Hash(s, p[2:])
-// 			if _, ok := DPtable[key]; !ok {
-// 				DPtable[key] = isMatch(s, p[2:])
-// 			}
-// 			return DPtable[key]
-// 		} else if 2 == len(p) && p[1] == '*' {
-// 			return true
-// 		}
-// 		return false
-// 	case 2 < len(p) && p[1] == '*':
-// 		for i, _ := range s {
-// 			var temp bool
-// 			if p[0] == '.' {
-// 				temp = true
-// 			} else {
-// 				key := Hash(s[:i], p[:2])
-// 				if _, ok := DPtable[key]; !ok {
-// 					DPtable[key] = isMatch(s[:i], p[:2])
-// 				}
-// 				temp = DPtable[key]
-// 			}
-// 			if temp {
-// 				key := Hash(s[i:], p[2:])
-// 				if _, ok := DPtable[key]; !ok {
-// 					DPtable[key] = isMatch(s[i:], p[2:])
-// 				}
-// 				if DPtable[key] {
-// 					return true
-// 				}
-// 			}
-// 		}
-// 		key := Hash(s, p[:2])
-// 		if _, ok := DPtable[key]; !ok {
-// 			DPtable[key] = isMatch(s, p[:2])
-// 		}
-// 		if DPtable[key] {
-// 			key := Hash("", p[2:])
-// 			if _, ok := DPtable[key]; !ok {
-// 				DPtable[key] = isMatch("", p[2:])
-// 			}
-// 			if DPtable[key] {
-// 				return true
-// 			}
-// 		}
-// 	case 2 == len(p) && p[1] == '*':
-// 		if p[0] == '.' {
-// 			return true
-// 		}
-// 		for _, c := range s {
-// 			if c != rune(p[0]) {
-// 				return false
-// 			}
-// 		}
-// 		return true
-// 	case p[0] != '.' && s[0] != p[0]:
-// 		return false
+// 	lengthS := len(s)
+// 	lengthP := len(p)
+
+// 	if lengthP == 0 {
+// 		return lengthS == 0
 // 	}
-// 	key := Hash(s[1:], p[1:])
-// 	if _, ok := DPtable[key]; !ok {
-// 		DPtable[key] = isMatch(s[1:], p[1:])
+
+// 	//'same char' or '.'
+// 	matchedCharDot := lengthS != 0 && (s[0] == p[0] || p[0] == '.')
+
+// 	//star
+// 	matchedStar := lengthP >= 2 && p[1] == '*'
+// 	if matchedStar {
+// 		return (isMatch(s, string(p[2:])) || (matchedCharDot && isMatch(string(s[1:]), p)))
 // 	}
-// 	return DPtable[key]
+
+// 	//not star
+// 	return matchedCharDot && isMatch(string(s[1:]), string(p[1:]))
 // }
+
+func isMatch(s string, p string) bool {
+	m := len(s)
+	n := len(p)
+
+	dp := make([][]bool, m+1)
+
+	for i := range dp {
+		dp[i] = make([]bool, n+1)
+	}
+
+	dp[0][0] = true
+	for j := 2; j <= n && p[j-1] == '*'; j += 2 {
+		dp[0][j] = true
+	}
+
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if p[j-1] != '*' {
+				dp[i][j] = dp[i-1][j-1] && (s[i-1] == p[j-1] || p[j-1] == '.')
+			} else {
+				dp[i][j] = dp[i][j-2] || (dp[i-1][j] && (s[i-1] == p[j-2] || p[j-2] == '.'))
+			}
+		}
+	}
+	return dp[m][n]
+}
